@@ -19,13 +19,12 @@ Livy <- Livy %>%
   unnest_tokens(word, Text) %>%
   mutate(linenumber = row_number())
 
-
 # remove stop words
 cleaned_livy <- Livy %>%
   anti_join(stop_words)
 
 cleaned_livy %>%
-  count(word, sort = TRUE) 
+  count(word, sort = TRUE)
 
 # add sentiment from NRC dictionary
 LivySentiment <- cleaned_livy %>%
@@ -47,9 +46,12 @@ chapter_id <- Livy %>%
 
 LivySentimentCount <- LivySentimentCount %>%
   left_join(chapter_id) %>%
-  arrange(livy_id, sentiment)%>%
-  parse_number(Book, na = c("", "NA"), locale = default_locale())%>%
-  
+  arrange(livy_id, sentiment)
+
+break_points <- chapter_id %>%
+  group_by(Book) %>%
+  slice(1) %>%
+  na.omit()
   
 
 ggplot(LivySentimentCount, aes(livy_id, pct, group = sentiment,
@@ -58,8 +60,8 @@ ggplot(LivySentimentCount, aes(livy_id, pct, group = sentiment,
   ggtitle("Sentiments In Livy")+
   xlab("Book and Chapter")+
   ylab("Percent of Text per Chapter")+
-  scale_x_continuous(seq(from = 1, to = 36, by = 5))
-
+  scale_x_continuous(breaks = break_points$livy_id,
+                     labels = break_points$Book)
 
 #Topic Modeling
 #Not working
