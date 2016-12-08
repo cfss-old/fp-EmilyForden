@@ -47,5 +47,6 @@ top_terms %>%
   ggplot(aes(term, beta, fill = factor(topic))) +
   geom_bar(alpha = 0.8, stat = "identity", show.legend = FALSE) +
   facet_wrap(~ topic, scales = "free", ncol = 3) +
-  coord_flip()
+  coord_flip()+
+  ggsave("LivyTerms.png")
   

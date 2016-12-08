@@ -64,18 +64,7 @@ Livy_count <- Livy_tokens %>%
 Livy_dtm <- cast_dtm(Livy_count, Book, word, n)
 
 # estimate topic model
-library(topicmodels)
 
-livy_tm <- LDA(Livy_dtm, k = 5, control = list(seed = 1234))
-
-# top terms for each topic
-livy_tm_td <- tidy(livy_tm)
-
-top_terms <- livy_tm_td %>%
-  group_by(topic) %>%
-  top_n(5, beta) %>%
-  ungroup() %>%
-  arrange(topic, -beta)
 
 # Shiny app UI
 ui <- shinyUI(
@@ -149,15 +138,9 @@ server <- function(input, output) {
                          labels = break_points$Book)
   })
   
-  output$topics <- renderPlot({
-    top_terms %>%
-      mutate(term = reorder(term, beta)) %>%
-      ggplot(aes(term, beta, fill = factor(topic))) +
-      geom_bar(alpha = 0.8, stat = "identity", show.legend = FALSE) +
-      facet_wrap(~ topic, scales = "free", ncol = 3) +
-      coord_flip()
-  })
-}
+  renderImage(livyTerms.png)
+  }
+
 
 shinyApp(ui = ui, server = server)
 
