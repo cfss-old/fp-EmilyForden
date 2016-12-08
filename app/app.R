@@ -88,6 +88,11 @@ ui <- shinyUI(
         p("Could sentiment analysis of Livy’s work enable us to determine Livy’s attitude towards Augustus’ rule and the transition from Roman Republic to the Imperial period? "),
         h3("Complications"),
         p("Unfortunately, less than 25 percent of Livy’s work are extant. We have the earliest part of his work, which covers the period from the founding of Rome in the 6th century B.C. through the wars with Macadonia in 167 B.C. Unfortunately, not even these early works are complete: a section of 10 books, which cover 292 to 264 B.C., are missing from the body of work that we do have. Additionally, there is no direct reference to Augustus himself, which we believe was not introduced until the 134th book. Nevertheless, scholars believe Livy’s attitude towards Augustus can still be detected in his discussion of early Rome, especially it’s founding.  "),
+        h3("Sentiment Analysis"),
+        p("Negative and positive sentiments are the most common in Livy’s work. Interestingly, the positivity ebbs and flows while the negatively builds but then slowly declines. One explanation for the shape of the positive sentiment is that each peak and valley corresponds to a vignette; the narrative arch starts with a problem but ends with a positive conclusion. Interestingly, trust seems to follow similar peaks and valleys as positivity, but at an overall lower level. Finally, fear is maintained at a constant level. This could be because most of Rome’s early history is tied to attacks and battles. "),
+        h3("Analysis of Topic Modeling"),
+        p("By dividing up Livy’s text into five themes, it is clear that Livy spends most of his time focused on economic policy and social wars in history that closely mimic the proposed reforms of Emperor Augustus. For example, the second topic – which contains the key words “people”, “enemy”, “commons”, “tribute”, and “war” – covers the agrarian land reforms of the Grachi brothers. Much like Augustus’ policies, these reforms distanced traditional policy makers (the elite) from the populace. Augustus was able to harness this separation for his own advantage. "),
+        
         sliderInput(
           "Book",
           "Book",
