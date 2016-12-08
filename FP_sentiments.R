@@ -10,7 +10,8 @@ library(ggplot2)
 theme_set(theme_bw())
 
 # get text
-Livy <- read_csv("All_Livy.csv")
+Livy <- read_csv("All_Livy.csv")%>%
+  mutate(Book = parse_number(Book))
 
 # convert to tokens
 Livy <- Livy %>%
@@ -49,11 +50,29 @@ LivySentimentCount <- LivySentimentCount %>%
   arrange(livy_id, sentiment)%>%
   parse_number(Book, na = c("", "NA"), locale = default_locale())%>%
   
-
+  
 
 ggplot(LivySentimentCount, aes(livy_id, pct, group = sentiment,
                                color = sentiment)) +
   geom_smooth(se = FALSE)+
   ggtitle("Sentiments In Livy")+
   xlab("Book and Chapter")+
-  ylab("Percent of Text per Chapter")
+  ylab("Percent of Text per Chapter")+
+  scale_x_continuous(seq(from = 1, to = 36, by = 5))
+
+
+#Topic Modeling
+#Not working
+top_terms <- LivySentiment %>%
+  group_by(topic) %>%
+  top_n(5, beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta)
+top_terms
+
+top_terms %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_bar(alpha = 0.8, stat = "identity", show.legend = FALSE) +
+  facet_wrap(~ topic, scales = "free", ncol = 3) +
+  coord_flip()
