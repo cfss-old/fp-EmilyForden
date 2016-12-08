@@ -22,7 +22,9 @@ shinyUI(
         )
       ),
       mainPanel(plotOutput("coolplot"),
-                tableOutput("results"))
+                tableOutput("results")),
+      
+                plotOutput("dumbplot")
     )
   )
 )

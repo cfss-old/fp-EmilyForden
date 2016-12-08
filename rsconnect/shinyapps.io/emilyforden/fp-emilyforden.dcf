@@ -3,6 +3,8 @@ title:
 account: emilyforden
 server: shinyapps.io
 appId: 143259
-bundleId: 640956
+bundleId: 640993
 url: https://emilyforden.shinyapps.io/fp-emilyforden/
-when: 1481217744.77006
+when: 1481219420.79671
+asMultiple: FALSE
+asStatic: FALSE
