@@ -6,6 +6,7 @@ library(broom)
 library(scales)
 library(dplyr)
 library(ggplot2)
+library(rsconnect)
 
 theme_set(theme_bw())
 
@@ -58,23 +59,8 @@ ggplot(LivySentimentCount, aes(livy_id, pct, group = sentiment,
                                color = sentiment)) +
   geom_smooth(se = FALSE)+
   ggtitle("Sentiments In Livy")+
-  xlab("Book and Chapter")+
+  xlab("Book")+
   ylab("Percent of Text per Chapter")+
   scale_x_continuous(breaks = break_points$livy_id,
                      labels = break_points$Book)
 
-#Topic Modeling
-#Not working
-top_terms <- LivySentiment %>%
-  group_by(topic) %>%
-  top_n(5, beta) %>%
-  ungroup() %>%
-  arrange(topic, -beta)
-top_terms
-
-top_terms %>%
-  mutate(term = reorder(term, beta)) %>%
-  ggplot(aes(term, beta, fill = factor(topic))) +
-  geom_bar(alpha = 0.8, stat = "identity", show.legend = FALSE) +
-  facet_wrap(~ topic, scales = "free", ncol = 3) +
-  coord_flip()

@@ -1,7 +1,7 @@
 #Part 2: UI
 library(shiny)
 library(tidyverse)
-
+library(rsconnect)
 # get text
 Livy <- read_csv("All_Livy.csv")%>%
   mutate(Book = parse_number(Book))
@@ -46,7 +46,8 @@ break_points <- chapter_id %>%
   slice(1) %>%
   na.omit()
 
-ui <- fluidPage(
+shinyUI(
+  fluidPage(
   titlePanel("Sentiments in Livy"),
   sidebarLayout(
     sidebarPanel(
@@ -72,7 +73,7 @@ ui <- fluidPage(
               tableOutput("results"))
   )
 )
-
+)
 server <- function(input, output) {
   filtered <- reactive({
     if(is.null(input$typeInput)) {
@@ -106,4 +107,5 @@ server <- function(input, output) {
 }
 
 shinyApp(ui = ui, server = server)
+
 
